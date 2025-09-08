@@ -7,5 +7,9 @@
     profiles = {
       server.enable = true;
     };
+
+    services = {
+      minecraft-server.enable = true;
+    };
   };
 }

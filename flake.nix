@@ -14,6 +14,10 @@
 
     # nixpkgs and other packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
