@@ -1,3 +1,6 @@
 {
-  imports = [ ./profiles.nix ];
+  imports = [
+    ./profiles.nix
+    ./base.nix
+  ];
 }
