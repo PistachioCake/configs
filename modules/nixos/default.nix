@@ -1,3 +1,7 @@
 {
-  imports = [ ./minecraft-server.nix ];
+  imports = [
+    ./metrics.nix
+    ./minecraft-server.nix
+    ./nginx.nix
+  ];
 }
