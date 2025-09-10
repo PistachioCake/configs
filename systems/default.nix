@@ -8,6 +8,7 @@
     };
     shared.modules = [
       "${self}/modules/pica" # generic options used in many places
+      "${self}/users"
       inputs.agenix.nixosModules.default
     ];
 
