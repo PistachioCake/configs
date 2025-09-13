@@ -12,6 +12,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # secrets management
+    agenix.url = "github:ryantm/agenix";
+
     # nixpkgs and other packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nix-minecraft = {
