@@ -6,23 +6,17 @@
 }:
 let
   inherit (lib)
-    mkEnableOption
     mkDefault
     mkOption
     mkIf
     types
     ;
+  inherit (self.lib) mkServiceOption;
   cfg = config.pica.services.nginx;
 in
 {
   options.pica.services = {
-    nginx = {
-      enable = mkEnableOption "An nginx server";
-      domain = mkOption {
-        type = types.str;
-        default = config.networking.domain;
-      };
-    };
+    nginx = mkServiceOption "nginx" { domain = config.networking.domain; };
   };
 
   # we want to use DNS-01 validation for our certificates. we configure this in security.acme.certs below, but

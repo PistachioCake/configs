@@ -3,10 +3,12 @@
   lib,
   config,
   pkgs,
+  self,
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (self.lib) mkServiceOption;
   cfg = config.pica.services.minecraft-server;
 
   system = pkgs.system; # TODO: is there a better way to get the current system?
@@ -14,7 +16,10 @@ let
 in
 {
   options.pica.services = {
-    minecraft-server.enable = mkEnableOption "A minecraft server";
+    minecraft-server = mkServiceOption "Minecraft Server" {
+      port = 25565;
+      domain = null;
+    };
   };
 
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
@@ -30,6 +35,13 @@ in
         # TODO: consider further changing jvmOpts
         jvmOpts = "-Xmx16384M -Xms8192M";
         package = mcpkgs.paperServers.paper-1_21_5-build_103;
+        # TODO: make serverProperties declarative by uncommenting the below values
+        # serverProperties = {
+        #   server-port = cfg.port;
+        #   motd = "Now running on tardigrade!";
+        #   white-list = true;
+        #   max-players = 20;
+        # };
       };
     };
   };

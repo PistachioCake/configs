@@ -28,6 +28,12 @@
           ];
         }
       ];
+
+      grafana = {
+        enable = true;
+        domain = "stats.${config.networking.domain}";
+        path = "/grafana";
+      };
     };
   };
 
