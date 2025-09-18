@@ -17,6 +17,7 @@
         meta.description = "Devshell";
         packages = [
           config.formatter
+          inputs.agenix.packages.${system}.default
         ];
       };
 
