@@ -14,15 +14,15 @@
     ];
     kernelModules = [ "nvme" ];
   };
-  fileSystems = {
-    "/" = {
-      device = "/dev/mapper/ocivolume-root";
-      fsType = "xfs";
-    };
-    "/boot" = {
-      device = "/dev/disk/by-uuid/61A6-3EB9";
-      fsType = "vfat";
-    };
-  };
+  # fileSystems = {
+  #   "/" = {
+  #     device = "/dev/mapper/ocivolume-root";
+  #     fsType = "xfs";
+  #   };
+  #   "/boot" = {
+  #     device = "/dev/disk/by-uuid/61A6-3EB9";
+  #     fsType = "vfat";
+  #   };
+  # };
 
 }
