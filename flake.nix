@@ -13,10 +13,15 @@
     };
 
     # secrets management
-    agenix.url = "github:ryantm/agenix";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.darwin.follows = "";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # nixpkgs and other packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-minecraft = {
       url = "github:Infinidoge/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";

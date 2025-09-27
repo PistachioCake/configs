@@ -1,6 +1,6 @@
 {
   imports = [
-    ./profiles.nix
+    ./profiles
     ./base.nix
     ./users.nix
   ];

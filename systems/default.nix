@@ -18,6 +18,12 @@
         arch = "aarch64";
         class = "nixos";
       };
+
+      leopard = {
+        path = ./leopard;
+        arch = "x86_64";
+        class = "nixos";
+      };
     };
   };
 }

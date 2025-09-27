@@ -1,13 +1,21 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf elem;
+  inherit (lib)
+    mkIf
+    elem
+    optional
+    hasAttr
+    ;
 in
 {
   config = mkIf (elem "rushilu" config.pica.system.users) {
     users.users.rushilu = {
       isNormalUser = true;
 
-      extraGroups = [ "wheel" ];
+      extraGroups = [
+        "wheel"
+      ]
+      ++ optional (hasAttr "networkmanager" config.users.groups) "networkmanager";
       gender = {
         description = "N/A";
         pronouns = "they/them";

@@ -1,27 +1,17 @@
-{ config, lib, ... }:
-let
-  inherit (lib) mkMerge mkIf;
-in
+{ pkgs, ... }:
 {
-  config = mkMerge [
-    {
-      # Enable the `nix` command, and the flakes feature
-      nix.settings.experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-    }
-
-    (mkIf config.pica.profiles.server.enable {
-      services.openssh = {
-        enable = true;
-        settings = {
-          PasswordAuthentication = false;
-        };
-      };
-
-      boot.tmp.cleanOnBoot = true;
-      zramSwap.enable = true;
-    })
+  # Enable the `nix` command, and the flakes feature
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
   ];
+
+  # pin the nixpkgs registry to the system nixpkgs, so we don't download
+  # and evaluate nixpkgs when we `$ nix shell nixpkgs#hello -- hello`
+  nix.registry = {
+    nixpkgs.to = {
+      type = "path";
+      path = pkgs.path;
+    };
+  };
 }
