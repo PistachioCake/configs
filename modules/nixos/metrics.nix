@@ -13,8 +13,21 @@ let
     mkOption
     types
     ;
+  inherit (lib.lists) optional;
   inherit (self.lib) mkServiceOption;
   cfg = config.pica.metrics;
+
+  declaredScrapeConfigs = (
+    let
+      cfg-um = config.pica.services.minecraft-server.unifiedmetrics;
+    in
+    optional (cfg-um.enable && cfg-um.host == "127.0.0.1") {
+      job_name = "minecraft_unified_metrics_exporter";
+      static_configs = [
+        { targets = [ "127.0.0.1:${toString cfg-um.port}" ]; }
+      ];
+    }
+  );
 in
 {
   options.pica.metrics = {
@@ -44,7 +57,7 @@ in
       services.prometheus = {
         enable = true;
         port = 9000;
-        scrapeConfigs = cfg.scrape;
+        scrapeConfigs = declaredScrapeConfigs ++ cfg.scrape;
       };
     })
 

@@ -7,7 +7,8 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.lists) optional;
   inherit (self.lib) mkServiceOption;
   cfg = config.pica.services.minecraft-server;
 
@@ -19,6 +20,12 @@ in
     minecraft-server = mkServiceOption "Minecraft Server" {
       port = 25565;
       domain = null;
+      extraConfig = {
+        unifiedmetrics = mkServiceOption "Unified Metrics" {
+          port = 9100;
+          domain = null;
+        };
+      };
     };
   };
 
@@ -42,6 +49,48 @@ in
         #   white-list = true;
         #   max-players = 20;
         # };
+        files = {
+          plugins = pkgs.linkFarmFromDrvs "plugins" (
+            optional cfg.unifiedmetrics.enable (
+              pkgs.fetchurl {
+                url = "https://github.com/Cubxity/UnifiedMetrics/releases/download/v0.3.x-SNAPSHOT/unifiedmetrics-platform-bukkit-0.3.10-SNAPSHOT.jar";
+                sha256 = "0i529wsjgciwg8dxvmvrz51z6s0nzbqaxhmq9xqgriffnmxrl11b";
+              }
+            )
+          );
+          "plugins/unifiedmetrics/config.yml" = {
+            value = {
+              server = {
+                name = "global";
+              };
+              metrics = {
+                enabled = true;
+                driver = "prometheus";
+                collectors = {
+                  systemGc = true;
+                  systemMemory = true;
+                  systemProcess = true;
+                  systemThread = true;
+                  server = true;
+                  world = true;
+                  tick = true;
+                  events = true;
+                };
+              };
+            };
+          };
+          "plugins/unifiedmetrics/driver/prometheus.yml" = {
+            value = {
+              mode = "HTTP";
+              http = {
+                inherit (cfg.unifiedmetrics) host port;
+                authentication = {
+                  scheme = "NONE";
+                };
+              };
+            };
+          };
+        };
       };
     };
   };

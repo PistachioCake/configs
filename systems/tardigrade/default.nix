@@ -13,7 +13,10 @@
     };
 
     services = {
-      minecraft-server.enable = true;
+      minecraft-server = {
+        enable = true;
+        unifiedmetrics.enable = true;
+      };
       nginx.enable = true;
     };
 
