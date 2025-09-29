@@ -34,7 +34,7 @@ in
         enable = true;
         # TODO: consider further changing jvmOpts
         jvmOpts = "-Xmx16384M -Xms8192M";
-        package = mcpkgs.paperServers.paper-1_21_5-build_103;
+        package = mcpkgs.paperServers.paper-1_21_8;
         # TODO: make serverProperties declarative by uncommenting the below values
         # serverProperties = {
         #   server-port = cfg.port;
