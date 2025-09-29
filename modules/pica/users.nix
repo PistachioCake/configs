@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 let
   inherit (lib) mkOption types;
 in
@@ -6,6 +6,12 @@ in
   options.pica = {
     system.users = mkOption {
       type = types.listOf types.str;
+    };
+
+    system.mainUser = mkOption {
+      type = types.enum config.pica.system.users;
+      description = "The main user of this system";
+      default = lib.elemAt config.pica.system.users 0;
     };
   };
 
