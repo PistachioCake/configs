@@ -37,6 +37,11 @@ in
       eula = true;
 
       openFirewall = true;
+
+      managementSystem = {
+        systemd-socket.enable = true;       
+      };
+
       servers.paper = {
         enable = true;
         # TODO: consider further changing jvmOpts
