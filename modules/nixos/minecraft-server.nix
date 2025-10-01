@@ -39,7 +39,7 @@ in
       openFirewall = true;
 
       managementSystem = {
-        systemd-socket.enable = true;       
+        systemd-socket.enable = true;
       };
 
       servers.paper = {

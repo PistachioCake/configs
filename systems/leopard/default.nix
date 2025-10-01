@@ -1,4 +1,9 @@
-{ inputs, lib, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) getName;
 in
@@ -17,6 +22,13 @@ in
 
     printing.enable = true;
     networking.enable = true;
+    fprintd = {
+      enable = true;
+      tod = {
+        enable = true;
+        driver = pkgs.libfprint-2-tod1-goodix;
+      };
+    };
   };
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -42,6 +54,7 @@ in
     builtins.elem (getName pkg) [
       "nvidia-x11"
       "nvidia-settings"
+      "libfprint-2-tod1-goodix"
     ];
 
   system.stateVersion = "24.05";
