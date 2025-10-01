@@ -17,7 +17,13 @@
         enable = true;
         unifiedmetrics.enable = true;
       };
+
       nginx.enable = true;
+
+      pocket-id = {
+        enable = true;
+        domain = "login.${config.networking.domain}";
+      };
     };
 
     metrics = {

@@ -72,8 +72,12 @@ in
 
             domain = "${cfg.grafana.domain}";
             enforce_domain = true;
-            root_url = cfg.grafana.path;
+            root_url = "https://${cfg.grafana.domain}${cfg.grafana.path}";
             serve_from_sub_path = true;
+          };
+
+          "auth" = {
+            oauth_allow_insecure_email_lookup = true;
           };
 
           "auth.anonymous" = {
