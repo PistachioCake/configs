@@ -141,15 +141,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1757296734,
-        "narHash": "sha256-NRkbte52DMPcDbWEM823CJSApImXLIzRmWCKMMhYVbA=",
-        "owner": "Infinidoge",
+        "lastModified": 1759601165,
+        "narHash": "sha256-i+JlJdeuHgYfqhvnhFogds65cC7MTYmkr+VhlEYtv1A=",
+        "owner": "pistachiocake",
         "repo": "nix-minecraft",
-        "rev": "e2915ee5edd4da1fa076ba155f1d539be78340fb",
+        "rev": "5c04be1241c7e3bf83eed80225d7607d9e7e9115",
         "type": "github"
       },
       "original": {
-        "owner": "Infinidoge",
+        "owner": "pistachiocake",
+        "ref": "push-nospvklzxuln",
         "repo": "nix-minecraft",
         "type": "github"
       }
