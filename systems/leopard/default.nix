@@ -20,6 +20,10 @@ in
       graphical.enable = true;
     };
 
+    services = {
+      tailscale.enable = true;
+    };
+
     printing.enable = true;
     networking.enable = true;
     fprintd = {

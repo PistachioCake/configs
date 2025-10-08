@@ -7,6 +7,7 @@
     ./nginx.nix
     ./pocket-id.nix
     ./system
+    ./tailscale.nix
   ];
 
   config = {

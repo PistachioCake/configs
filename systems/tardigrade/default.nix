@@ -29,6 +29,8 @@
         domain = "login.${config.networking.domain}";
         webfinger.enable = true;
       };
+
+      tailscale.enable = true;
     };
 
     metrics = {
