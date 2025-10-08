@@ -27,6 +27,7 @@
       pocket-id = {
         enable = true;
         domain = "login.${config.networking.domain}";
+        webfinger.enable = true;
       };
     };
 

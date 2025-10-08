@@ -68,7 +68,7 @@ in
       };
 
       certs.${cfg.domain} = {
-        domain = "*.${cfg.domain}";
+        extraDomainNames = [ "*.${cfg.domain}" ];
       };
     };
   };

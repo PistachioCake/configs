@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
   inherit (self.lib) mkServiceOption;
   cfg = config.pica.services.pocket-id;
 in
@@ -16,7 +16,9 @@ in
     pocket-id = mkServiceOption "Pocket ID" {
       # defaults taken from https://pocket-id.org/docs/configuration/environment-variables
       port = 1411;
-      host = "127.0.0.1";
+      extraConfig = {
+        webfinger.enable = mkEnableOption "Webfinger";
+      };
     };
   };
 
@@ -45,6 +47,27 @@ in
           proxy_buffer_size 256k;
         '';
       };
+    };
+
+    services.nginx.virtualHosts.${config.networking.domain} = mkIf cfg.webfinger.enable {
+      locations."/.well-known/webfinger" =
+        let
+          webfingerResponse = builtins.toJSON {
+            subject = "acct:me@${config.networking.domain}";
+            links = [
+              {
+                rel = "http://openid.net/specs/connect/1.0/issuer";
+                href = "https://${cfg.domain}";
+              }
+            ];
+          };
+        in
+        {
+          return = "200 '${webfingerResponse}'";
+          extraConfig = ''
+            default_type application/json;
+          '';
+        };
     };
   };
 }
