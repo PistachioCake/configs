@@ -16,6 +16,10 @@
       minecraft-server = {
         enable = true;
         unifiedmetrics.enable = true;
+        bluemap = {
+          enable = true;
+          domain = "mc.${config.networking.domain}";
+        };
       };
 
       nginx.enable = true;

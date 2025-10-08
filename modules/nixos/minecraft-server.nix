@@ -31,6 +31,9 @@ in
           domain = null;
         };
         terra.enable = mkEnableOption "Terra";
+        bluemap = mkServiceOption "BlueMap" {
+          port = 9101;
+        };
       };
     };
   };
@@ -38,6 +41,15 @@ in
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
 
   config = mkIf cfg.enable {
+    services.nginx = mkIf cfg.bluemap.enable {
+      virtualHosts.${cfg.bluemap.domain} = {
+        locations."/" = {
+          proxyPass = "http://${toString cfg.bluemap.host}:${toString cfg.bluemap.port}";
+          recommendedProxySettings = true;
+        };
+      };
+    };
+
     services.minecraft-servers = {
       enable = true;
       eula = true;
@@ -73,6 +85,12 @@ in
                 pkgs.fetchurl {
                   url = "https://cdn.modrinth.com/data/FIlZB9L0/versions/Ufl71nST/Terra-bukkit-6.6.6-BETA+451683aff-shaded.jar";
                   sha256 = "05gi1bgmq5plqx141sagbfrx6jqmjlc9l6b3y6hx6csl4xm5v693";
+                }
+              ))
+              (optional cfg.bluemap.enable (
+                pkgs.fetchurl {
+                  url = "https://cdn.modrinth.com/data/swbUV1cr/versions/LIP9FOJo/bluemap-5.12-paper.jar";
+                  sha256 = "18nhxwfa2f0q0gmj0gmg7c7isy3pcrlzjy0w1cmhd2mhfcnmzab3";
                 }
               ))
             ]);

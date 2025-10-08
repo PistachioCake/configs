@@ -3,8 +3,8 @@ let
   inherit (lib)
     mkIf
     elem
-    optional
     hasAttr
+    filter
     ;
 in
 {
@@ -15,7 +15,10 @@ in
       extraGroups = [
         "wheel"
       ]
-      ++ optional (hasAttr "networkmanager" config.users.groups) "networkmanager";
+      ++ filter (group: hasAttr group config.users.groups) [
+        "networkmanager"
+        "minecraft"
+      ];
       gender = {
         description = "N/A";
         pronouns = "they/them";
